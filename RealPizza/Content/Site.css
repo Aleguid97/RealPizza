@@ -1,0 +1,76 @@
+﻿/* Set padding to keep content from hitting the edges */
+.body-content {
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+* body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f4e9;
+}
+
+a, a:hover {
+    color: #000000;
+    text-decoration: none;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.product-card {
+    background-color: #F0EAD6; /* Colore di sfondo */
+    padding: 1em;
+    box-shadow: 0 5px 5px #E1E1E1;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: background-color 0.3s, border-radius 0.3s, color 0.3s; /* Aggiornato il tempo di transizione */
+    border-radius: 15px; /* Bordi arrotondati */
+}
+
+
+    .product-card:hover {
+        background-color: #D4B996; /* Cambio colore di sfondo al passaggio del mouse */
+        color: #442C08; /* Cambio colore del testo al passaggio del mouse */
+        border-radius: 15px; /* Arrotondamento dei bordi durante l'hover */
+    }
+
+    .product-card h4 {
+        font-size: 1.3em;
+        margin: 0.5em 0;
+        font-weight: bold;
+    }
+
+.card-footer {
+    display: flex;
+    justify-content: space-between; /* Allinea i bottoni alla fine della card */
+}
+
+
+.product-card button {
+    background-color: peru;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    width: 100px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s; /* Aggiornato il tempo di transizione */
+}
+
+
+    .product-card button:hover {
+        background-color: saddlebrown;
+    }
+
+
+@media screen and (max-width: 576px) {
+    .product-card {
+        font-size: 0.9em;
+    }
+}
