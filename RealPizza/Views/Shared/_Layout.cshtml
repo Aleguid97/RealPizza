@@ -42,7 +42,7 @@
                     }
                     else
                     {
-                        <li class="nav-item">@Html.ActionLink("Carrello", "", "", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Carrello", "Acquista","AddToCart", new { area = "" }, new { @class = "nav-link" })</li>
                         <li class="nav-item">
                             <form action="@Url.Action("Logout", "Users")" method="post">
                                 <button type="submit" class="btn btn-link nav-link">Logout</button>

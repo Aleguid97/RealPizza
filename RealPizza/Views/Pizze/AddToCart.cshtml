@@ -5,11 +5,11 @@
 }
 
 <h2>Il tuo Carrello</h2>
+
+
 <ul>
-    @foreach (var pizze in Model)
+    @foreach (var item in Model) 
     {
-        <li>@pizze.Nome - €@pizze.Prezzo <a href="@Url.Action("RimuoviDalCarrello", new { id = pizze.ID_Pizza })">Rimuovi</a></li>
+        <li>@item.Nome - €@item.Prezzo <a href="@Url.Action("RimuoviDalCarrello", new { id = item.ID_Pizza })">Rimuovi</a></li>
     }
 </ul>
-
-}

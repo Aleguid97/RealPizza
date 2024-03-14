@@ -147,21 +147,24 @@ namespace RealPizza.Models
 
         public ActionResult AddToCart(int id)
         {
-            var dbContext = new ModelDbContext();
-            var pizza = dbContext.Pizze.Find(id);
-            if (pizza != null)
+            using (var dbContext = new ModelDbContext())
             {
-                var carrello = Session["Carrello"] as List<Pizze> ?? new List<Pizze>();
-                carrello.Add(pizza);
-                Session["Carrello"] = carrello;
+                var pizza = dbContext.Pizze.Find(id);
+                if (pizza != null)
+                {
+                    var carrello = Session["Carrello"] as List<Pizze> ?? new List<Pizze>();
+                    carrello.Add(pizza);
+                    Session["Carrello"] = carrello;
+                    
+                    return View(carrello);
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
             }
-            else
-            {
-                return HttpNotFound();
-            }
-
-            return View();
         }
+
 
         public ActionResult RemoveFromCart(int id)
         {
