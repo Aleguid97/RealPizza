@@ -139,11 +139,11 @@ namespace RealPizza.Models
             return RedirectToAction("Index");
         }
 
-        //public ActionResult Index()
-        //{
-        //    var carrello = Session["Carrello"] as List<Pizze> ?? new List<Pizze>();
-        //    return View();
-        //}
+        public ActionResult Carrello()
+        {
+            var carrello = Session["Carrello"] as List<Pizze> ?? new List<Pizze>();
+            return View(carrello);
+        }
 
         public ActionResult AddToCart(int id)
         {
@@ -155,39 +155,48 @@ namespace RealPizza.Models
                     var carrello = Session["Carrello"] as List<Pizze> ?? new List<Pizze>();
                     carrello.Add(pizza);
                     Session["Carrello"] = carrello;
-                    
-                    return View(carrello);
+
+                    TempData["Message"] = "Prodotto aggiunto al carrello con successo.";
                 }
                 else
                 {
-                    return HttpNotFound();
+                    TempData["Message"] = "Errore: Prodotto non trovato.";
                 }
+
+                return RedirectToAction("Index", "Pizze");
             }
         }
-
 
         public ActionResult RemoveFromCart(int id)
         {
-            var carrello = Session["Carrello"] as List<Pizze> ?? new List<Pizze>();
-            var pizza = carrello.FirstOrDefault(p => p.ID_Pizza == id);
-            if (pizza != null)
+            using (var dbContext = new ModelDbContext())
             {
-                carrello.Remove(pizza);
-                Session["Carrello"] = carrello;
+                var carrello = Session["Carrello"] as List<Pizze>;
+                if (carrello != null)
+                {
+                    // Cerca la pizza nel carrello
+                    var pizzaToRemove = carrello.FirstOrDefault(p => p.ID_Pizza == id);
+                    if (pizzaToRemove != null)
+                    {
+                        // Rimuovi la pizza dal carrello
+                        carrello.Remove(pizzaToRemove);
+                        Session["Carrello"] = carrello;
+
+                        TempData["Message"] = "Prodotto rimosso dal carrello con successo.";
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Errore: Prodotto non trovato nel carrello.";
+                    }
+                }
+                else
+                {
+                    TempData["Message"] = "Errore: Carrello non trovato.";
+                }
+
+                return RedirectToAction("Index", "Pizze");
             }
-            else
-            {
-                return HttpNotFound();
-            }
-            return View();
         }
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+
     }
 }

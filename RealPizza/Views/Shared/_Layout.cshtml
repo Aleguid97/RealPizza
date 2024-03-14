@@ -8,10 +8,25 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
 
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark mb-5">
+<body>
+    <style>
+        
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #D4B996;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-5" style="background-color: #D4B996">
         <div class="container">
+            <img class="rounded-circle me-3" width="80" height="80" src="https://img.freepik.com/premium-vector/pizza-logo-line-art-illustration-design-vector-creative-nature-minimalist-monoline-outline-linear-simple-modern_617249-24.jpg?w=740" />
             @Html.ActionLink("Real Pizza", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +42,7 @@
                         <li class="nav-item">@Html.ActionLink("Aggiungi Pizza", "Create", "Pizze", new { area = "" }, new { @class = "nav-link" })</li>
                     }
 
-                    
+
                 </ul>
             </div>
             <div class="collapse navbar-collapse justify-content-end">
@@ -37,12 +52,12 @@
                     {
                         <li class="nav-item">@Html.ActionLink("Accedi", "Authorize", "Users", new { area = "" }, new { @class = "nav-link" })</li>
                         <li class="nav-item">@Html.ActionLink("Registrati", "Create", "Users", new { area = "" }, new { @class = "nav-link" })</li>
-                        
+
 
                     }
                     else
                     {
-                        <li class="nav-item">@Html.ActionLink("Carrello", "Acquista","AddToCart", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Carrello", "Carrello", "Pizze", new { area = "" }, new { @class = "nav-link" })</li>
                         <li class="nav-item">
                             <form action="@Url.Action("Logout", "Users")" method="post">
                                 <button type="submit" class="btn btn-link nav-link">Logout</button>
@@ -59,10 +74,10 @@
         @RenderBody()
     </div>
 
-    <div class="card text-center position-static container-fluid">
+    <div class="card text-center position-static footer container-fluid" style="background-color: #D4B996">
         <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <h5 class="card-title"> RealPizza </h5>
+            <p class="card-text">Il Meglio della Pizza</p>
             <p>  @DateTime.Now.Day  @DateTime.Now.Month  @DateTime.Now.Year </p>
             <p> </p>
 

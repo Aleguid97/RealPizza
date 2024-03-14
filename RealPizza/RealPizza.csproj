@@ -258,7 +258,7 @@
     <Content Include="Views\Pizze\Edit.cshtml" />
     <Content Include="Views\Pizze\Index.cshtml" />
     <Content Include="Views\Users\Authorize.cshtml" />
-    <Content Include="Views\Pizze\AddToCart.cshtml" />
+    <Content Include="Views\Pizze\Carrello.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
