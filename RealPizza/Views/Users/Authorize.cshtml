@@ -4,46 +4,63 @@
     ViewBag.Title = "Authorize";
 }
 
+@if (TempData["LoginMessage"] != null)
+{
+    <div id="alertMessage" class="alert alert-success" role="alert">
+        @TempData["LoginMessage"]
+    </div>
+
+    <script>
+        // Funzione per nascondere automaticamente l'alert dopo un certo periodo di tempo
+        window.setTimeout(function () {
+            $("#alertMessage").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 1000); // L'alert scomparirà dopo 3 secondi (3000 millisecondi)
+    </script>
+}
+
+
 @using (Html.BeginForm())
 {
-   <div class="container mb-4">
-       <div class="row justify-content-center" style="margin-bottom: 100px">
-           <div class="col-md-8">
-               <div class="card shadow">
-                   <div class="card-header" style="background-color: peru;">
-                       <h5 class="mb-0">Accedi</h5>
-                   </div>
-                   <div class="card-body1">
+    <div class="container mb-4">
+        <div class="row justify-content-center" style="margin-bottom: 100px">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header" style="background-color: peru;">
+                        <h5 class="mb-0">Accedi</h5>
+                    </div>
+                    <div class="card-body1">
 
-                       @Html.AntiForgeryToken()
+                        @Html.AntiForgeryToken()
 
-                       <div class="form-group">
+                        <div class="form-group">
 
-                           <hr />
-                           @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                           <div class="form-group ">
-                               @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label" })
-                               @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
-                               @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-                           </div>
-                           <div class="form-group mt-3">
-                               @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
-                               @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                               @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                           </div>
+                            <div class="form-group ">
+                                @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group mt-3">
+                                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
 
-                           <div class="form-group">
-                               <button type="submit" class="mt-4">Accedi</button>
-                           </div>
-                       </div>
+                            <div class="form-group">
+                                <button type="submit" class="mt-4">Accedi</button>
+                            </div>
+                        </div>
 
-                   </div>
-               </div>
-           </div>
-       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-           }
-           @section Scripts {
-               @Scripts.Render("~/bundles/jqueryval")
-           }
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -4,6 +4,25 @@
     ViewBag.Title = "Index";
 }
 
+
+
+@if (TempData["Message"] != null)
+{
+    <div id="alertMessage" class="alert alert-success" role="alert">
+        @TempData["Message"]
+    </div>
+
+    <script>
+        // Funzione per nascondere automaticamente l'alert dopo un certo periodo di tempo
+        window.setTimeout(function () {
+            $("#alertMessage").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 1000); // L'alert scomparirà dopo 3 secondi (3000 millisecondi)
+    </script>
+}
+
+
 <link href="~/Content/Site.css" rel="stylesheet" />
 
 <div class="overlay h-100"></div>

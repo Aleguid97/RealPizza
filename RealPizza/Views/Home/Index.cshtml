@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pizzeria RealPizza</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="~/Content/Site.css">
     <style>
         * {
             font-family: "Poppins", sans-serif;
@@ -59,7 +59,7 @@
                 <div class="col-md-6">
                     <h2>Il Nostro Menu</h2>
                     <p>Esplora una vasta selezione di pizze artigianali, realizzate con ingredienti freschi e genuini.</p>
-                    @Html.ActionLink("Scopri il menu", "Index", "Pizze", null, new { @class = "btn btn-outline-dark btn-lg" })
+                    @Html.ActionLink("Menu", "Index", "Pizze", null, new {@class = "button2"})
                 </div>
                 <div class="col-md-6">
                     <img src="~/Content/Immagini/MenuSection.jpg" alt="Menu" class="img-fluid rounded-3 w-100 h-100">
@@ -83,13 +83,13 @@
         <section class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <iframe class="rounded-3" width="400" height="250" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6844565.288961146!2d84.72806645772494!3d33.10716738328714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x376530c9d373a977%3A0x83b13173a523ec44!2sPrefettura%20di%20Nagqu%2C%20Tibet%2C%20Cina!5e0!3m2!1sit!2sit!4v1710356405606!5m2!1sit!2sit"></iframe>
-                </div>
-                <div class="col-md-6">
                     <h2>Vieni a trovarci</h2>
                     <p>Vi aspettiamo nel nostro accogliente ristorante. Assaporate l'autentica esperienza della pizza con noi.</p>
                     <p>Indirizzo: Via Roma, 123 - Città</p>
                     <p>Orari: Martedì-Domenica 12:00-23:00</p>
+                </div>
+                <div class="col-md-6">
+                    <iframe class="rounded-3" width="400" height="250" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6844565.288961146!2d84.72806645772494!3d33.10716738328714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x376530c9d373a977%3A0x83b13173a523ec44!2sPrefettura%20di%20Nagqu%2C%20Tibet%2C%20Cina!5e0!3m2!1sit!2sit!4v1710356405606!5m2!1sit!2sit"></iframe>
                 </div>
             </div>
         </section>

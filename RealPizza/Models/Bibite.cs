@@ -20,6 +20,8 @@ namespace RealPizza.Models
 
         [Required]
         [StringLength(50)]
+
+        [Display(Name = "Nome Bibita")]
         public string Nome { get; set; }
 
         public decimal Prezzo { get; set; }

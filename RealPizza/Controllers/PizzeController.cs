@@ -81,7 +81,6 @@ namespace RealPizza.Models
 
 
 
-
         // GET: Pizze/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -156,6 +155,22 @@ namespace RealPizza.Models
                     carrello.Add(pizza);
                     Session["Carrello"] = carrello;
 
+                    var cookieValue = HttpContext.Request.Cookies["IDCookie"]?.Value;
+                    if (!string.IsNullOrEmpty(cookieValue))
+                    {
+                        // Creazione di un nuovo oggetto Users con il valore del cookie e aggiunta alla lista Utenti
+                        var utente = new Users { ID_Utente = Convert.ToInt32(cookieValue)};
+                        var utenti = Session["Utenti"] as List<Users> ?? new List<Users>();
+                        utenti.Add(utente);
+                        Session["Utenti"] = utenti;
+                    }
+                    else
+                    {
+                        // Gesto il caso in cui il cookie non ha un valore
+                        TempData["Message"] = "Errore: Cookie non presente.";
+                        return RedirectToAction("Index", "Pizze");
+                    }
+
                     TempData["Message"] = "Prodotto aggiunto al carrello con successo.";
                 }
                 else
@@ -166,6 +181,7 @@ namespace RealPizza.Models
                 return RedirectToAction("Index", "Pizze");
             }
         }
+
 
         public ActionResult RemoveFromCart(int id)
         {
@@ -194,9 +210,8 @@ namespace RealPizza.Models
                     TempData["Message"] = "Errore: Carrello non trovato.";
                 }
 
-                return RedirectToAction("Index", "Pizze");
+                return RedirectToAction("Carrello", "Pizze");
             }
         }
-
     }
 }

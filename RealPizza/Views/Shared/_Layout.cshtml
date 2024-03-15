@@ -7,11 +7,13 @@
     <title>@ViewBag.Title - Applicazione ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 </head>
 
 <body>
+
     <style>
-        
+
         .footer {
             position: fixed;
             left: 0;
@@ -41,8 +43,6 @@
                     {
                         <li class="nav-item">@Html.ActionLink("Aggiungi Pizza", "Create", "Pizze", new { area = "" }, new { @class = "nav-link" })</li>
                     }
-
-
                 </ul>
             </div>
             <div class="collapse navbar-collapse justify-content-end">
@@ -52,7 +52,6 @@
                     {
                         <li class="nav-item">@Html.ActionLink("Accedi", "Authorize", "Users", new { area = "" }, new { @class = "nav-link" })</li>
                         <li class="nav-item">@Html.ActionLink("Registrati", "Create", "Users", new { area = "" }, new { @class = "nav-link" })</li>
-
 
                     }
                     else
@@ -69,7 +68,21 @@
             </div>
         </div>
     </nav>
+    @if (TempData["LogoutMessage"] != null)
+    {
+        <div id="alertMessage" class="alert alert-danger mb-5" role="alert">
+            @TempData["LogoutMessage"]
+        </div>
 
+        <script>
+            // Funzione per nascondere automaticamente l'alert dopo un certo periodo di tempo
+            window.setTimeout(function () {
+                $("#alertMessage").fadeTo(500, 0).slideUp(500, function () {
+                    $(this).remove();
+                });
+            }, 2000); // L'alert scomparirà dopo 3 secondi (3000 millisecondi)
+        </script>
+    }
     <div class="container">
         @RenderBody()
     </div>

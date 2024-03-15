@@ -20,6 +20,8 @@ namespace RealPizza.Models
 
         [Required]
         [StringLength(50)]
+
+        [Display(Name = "Nome Cliente")]
         public string Nome { get; set; }
 
         [Required]

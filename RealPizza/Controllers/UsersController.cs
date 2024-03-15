@@ -52,7 +52,7 @@ namespace RealPizza.Models
             {
                 db.Users.Add(users);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
             }
 
             return View(users);
@@ -133,6 +133,10 @@ namespace RealPizza.Models
                     {
                         FormsAuthentication.SetAuthCookie(username, false);
                         TempData["LoginMessage"] = "Benvenuto " + user.Username;
+                        HttpCookie LoginCookie = new HttpCookie("IDCookie");
+                        LoginCookie.Value = user.ID_Utente.ToString();
+                        LoginCookie.Expires = DateTime.Now.AddHours(1);
+                        Response.Cookies.Add(LoginCookie);
 
                         if (user.Ruolo == "Admin")
                         {
@@ -141,11 +145,15 @@ namespace RealPizza.Models
 
                         return RedirectToAction("Index", "Home");
                     }
+
+                    
                     else
                     {
                         ModelState.AddModelError("", "Username o Password errati");
                         return View();
                     }
+
+
                 }
             }
             else
