@@ -144,43 +144,46 @@ namespace RealPizza.Models
             return View(carrello);
         }
 
-        public ActionResult AddToCart(int id)
+       public ActionResult AddToCart(int id)
+{
+    using (var dbContext = new ModelDbContext())
+    {
+        var pizza = dbContext.Pizze.Find(id);
+        if (pizza != null)
         {
-            using (var dbContext = new ModelDbContext())
+            var carrello = Session["Carrello"] as List<Pizze> ?? new List<Pizze>();
+            carrello.Add(pizza);
+            Session["Carrello"] = carrello;
+
+            var cookieValue = HttpContext.Request.Cookies["IDCookie"]?.Value;
+            if (!string.IsNullOrEmpty(cookieValue))
             {
-                var pizza = dbContext.Pizze.Find(id);
-                if (pizza != null)
-                {
-                    var carrello = Session["Carrello"] as List<Pizze> ?? new List<Pizze>();
-                    carrello.Add(pizza);
-                    Session["Carrello"] = carrello;
-
-                    var cookieValue = HttpContext.Request.Cookies["IDCookie"]?.Value;
-                    if (!string.IsNullOrEmpty(cookieValue))
-                    {
-                        // Creazione di un nuovo oggetto Users con il valore del cookie e aggiunta alla lista Utenti
-                        var utente = new Users { ID_Utente = Convert.ToInt32(cookieValue)};
-                        var utenti = Session["Utenti"] as List<Users> ?? new List<Users>();
-                        utenti.Add(utente);
-                        Session["Utenti"] = utenti;
-                    }
-                    else
-                    {
-                        // Gesto il caso in cui il cookie non ha un valore
-                        TempData["Message"] = "Errore: Cookie non presente.";
-                        return RedirectToAction("Index", "Pizze");
-                    }
-
-                    TempData["Message"] = "Prodotto aggiunto al carrello con successo.";
-                }
-                else
-                {
-                    TempData["Message"] = "Errore: Prodotto non trovato.";
-                }
-
+                // Creazione di un nuovo oggetto Users con il valore del cookie e aggiunta alla lista Utenti
+                var utente = new Users { ID_Utente = Convert.ToInt32(cookieValue)};
+                var utenti = Session["Utenti"] as List<Users> ?? new List<Users>();
+                utenti.Add(utente);
+                Session["Utenti"] = utenti;
+            }
+            else
+            {
+                // Gesto il caso in cui il cookie non ha un valore
+                TempData["Message"] = "Errore: Cookie non presente.";
                 return RedirectToAction("Index", "Pizze");
             }
+
+            // Aggiorna il badge del carrello
+            AggiornaBadgeCarrello();
+            
+            TempData["Message"] = "Prodotto aggiunto al carrello con successo.";
         }
+        else
+        {
+            TempData["Message"] = "Errore: Prodotto non trovato.";
+        }
+
+        return RedirectToAction("Index", "Pizze");
+    }
+}
 
 
         public ActionResult RemoveFromCart(int id)
@@ -199,6 +202,9 @@ namespace RealPizza.Models
                         Session["Carrello"] = carrello;
 
                         TempData["Message"] = "Prodotto rimosso dal carrello con successo.";
+
+                        // Aggiorna il badge del carrello
+                        AggiornaBadgeCarrello();
                     }
                     else
                     {
@@ -212,6 +218,20 @@ namespace RealPizza.Models
 
                 return RedirectToAction("Carrello", "Pizze");
             }
+        }
+
+        private void AggiornaBadgeCarrello()
+        {
+            // Ottieni il numero di pizze presenti nella sessione del carrello
+            var carrello = Session["Carrello"] as List<Pizze>;
+            var numeroArticoli = carrello?.Count ?? 0;
+             
+            
+            
+
+
+            // Aggiorna il badge del carrello nella sessione
+            Session["BadgeCarrello"] = numeroArticoli;
         }
     }
 }

@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pizzeria RealPizza</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="~/Content/Site.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/Site.css" />
     <style>
-        * {
-            font-family: "Poppins", sans-serif;
+
+        body {
+            background-color: #f7f4e9;
+            ;
         }
+        
         header {
-            background-image: url('https://images.unsplash.com/photo-1619853618139-fe43aff572fa?q=80&w=3431&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-image: url('https://images.unsplash.com/photo-1619853618139-fe43aff572fa?q=80&w=3431&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); 
             background-size: cover;
             color: white;
             padding: 50px;
@@ -22,7 +25,7 @@
                 font-size: 3rem;
                 margin-bottom: 10px;
             }
-
+        
         main {
             padding: 50px;
         }
@@ -46,10 +49,14 @@
                 color: white;
                 text-decoration: none;
             }
+
+                
     </style>
 </head>
+
+
 <body>
-    <header class="container-fluid">
+    <header class="container-fluid rounded-4">
         <h1 class="text-white">Pizzeria RealPizza</h1>
         <p class="text-white">L'arte della pizza incontra la passione culinaria autentica.</p>
     </header>
@@ -59,7 +66,7 @@
                 <div class="col-md-6">
                     <h2>Il Nostro Menu</h2>
                     <p>Esplora una vasta selezione di pizze artigianali, realizzate con ingredienti freschi e genuini.</p>
-                    @Html.ActionLink("Menu", "Index", "Pizze", null, new {@class = "button2"})
+                    @Html.ActionLink("Menu", "Index", "Pizze", null, new {@class = "BtnAcq"})
                 </div>
                 <div class="col-md-6">
                     <img src="~/Content/Immagini/MenuSection.jpg" alt="Menu" class="img-fluid rounded-3 w-100 h-100">

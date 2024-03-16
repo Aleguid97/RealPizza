@@ -1,6 +1,7 @@
 ﻿/* Set padding to keep content from hitting the edges */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 
+/* BODY and ALL*/
 * body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f7f4e9;
@@ -13,21 +14,35 @@
     padding-right: 15px;
 }
 
-
-
 a, a:hover {
     color: #000000;
     text-decoration: none;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
+}*/
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 25px;
+    width: 100px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
 }
 
-.product-card, .card-body1{
+
+
+/* Pizze Index*/
+
+
+.product-card, .card-body1 {
     background-color: #F0EAD6; /* Colore di sfondo */
     padding: 1em;
     box-shadow: 0 5px 5px #E1E1E1;
@@ -51,11 +66,11 @@ textarea {
 
 .card-footer {
     display: flex;
-    justify-content: space-between; /* Allinea i bottoni alla fine della card */
+    justify-content: space-between;
 }
 
-.button2 {
-    background-color: peru;
+.BtnDlt {
+    background-color: indianred;
     color: #000;
     border: none;
     border-radius: 25px;
@@ -67,14 +82,14 @@ textarea {
     transition: background-color 0.3s;
 }
 
-    .button2:hover {
-        background-color: saddlebrown;
+    .BtnDlt:hover {
+        background-color: #904040;
     }
 
 
-* button {
-    background-color: peru;
-    color: #fff;
+.BtnMdf {
+    background-color: #d8943b;
+    color: #000;
     border: none;
     border-radius: 25px;
     width: 100px;
@@ -82,16 +97,28 @@ textarea {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: background-color 0.3s; /* Aggiornato il tempo di transizione */
+    transition: background-color 0.3s;
 }
 
-
-    .product-card button:hover, .Registrazione:hover {
-        background-color: saddlebrown;
+    .BtnMdf:hover {
+        background-color: #a86916;
     }
 
-    .Registrazione{ 
-        margin-top: 10px;
+.BtnAcq {
+    background-color: burlywood;
+    color: #000;
+    border: none;
+    border-radius: 25px;
+    width: 100px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+    .BtnAcq:hover {
+        background-color: #b1936c;
     }
 
 
@@ -99,11 +126,14 @@ textarea {
     .product-card {
         font-size: 0.9em;
     }
-}
 
-/* Registrazione */
-
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+    /* INDEX HomePage */
 
 
+    * {
+        font-family: "Poppins", sans-serif;
+    }
 
+    /* Registrazione */
+
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");

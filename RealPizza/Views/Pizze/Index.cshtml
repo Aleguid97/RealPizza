@@ -21,8 +21,6 @@
         }, 1000); // L'alert scomparirà dopo 3 secondi (3000 millisecondi)
     </script>
 }
-
-
 <link href="~/Content/Site.css" rel="stylesheet" />
 
 <div class="overlay h-100"></div>
@@ -47,7 +45,7 @@
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <button>
+                        <button class="BtnAcq">
                             @Html.ActionLink("Acquista", "AddToCart", "Pizze", new { id = item.ID_Pizza }, null)
                         </button>
                     }
@@ -55,17 +53,17 @@
                     @if (User.IsInRole("Admin"))
                     {
 
-                        <button>
+                        <button class="BtnMdf">
                             @Html.ActionLink("Modifica", "Edit", new { id = item.ID_Pizza })
                         </button>
 
-                        <button>
+                        <button class="BtnDlt">
                             @Html.ActionLink("Elimina", "Delete", new { id = item.ID_Pizza })
                         </button>
                     }
                     @if (!User.Identity.IsAuthenticated)
                     {
-                        <p>Accedi per Acquistare</p>
+                       <button  class="button2">@Html.ActionLink("Accedi", "Authorize", "Users", new { area = "" }, new { @class = "nav-link" })</button>
                     }
                 </div>
             </div>

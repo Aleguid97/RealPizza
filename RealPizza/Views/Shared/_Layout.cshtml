@@ -52,14 +52,32 @@
                     {
                         <li class="nav-item">@Html.ActionLink("Accedi", "Authorize", "Users", new { area = "" }, new { @class = "nav-link" })</li>
                         <li class="nav-item">@Html.ActionLink("Registrati", "Create", "Users", new { area = "" }, new { @class = "nav-link" })</li>
-
                     }
                     else
                     {
-                        <li class="nav-item">@Html.ActionLink("Carrello", "Carrello", "Pizze", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                if (Session["BadgeCarrello"] != null && (int)Session["BadgeCarrello"] > 0)
+
+                                {
+                                    <button type="button" class="nav-link BtnMdf me-2 position-relative">
+                                        @Html.ActionLink("Carrello", "Carrello", "Pizze", new { area = "" }, new { @class = "nav-link" })
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger">
+                                            @Session["BadgeCarrello"]
+                                        </span>
+                                    </button>
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Carrello", "Carrello", "Pizze", new { area = "" }, new { @class = "nav-link BtnMdf me-2" })
+                                }
+                            }
+                        </li>
+
                         <li class="nav-item">
                             <form action="@Url.Action("Logout", "Users")" method="post">
-                                <button type="submit" class="btn btn-link nav-link">Logout</button>
+                                <button type="submit" class="btn btn-link BtnDlt nav-link">Logout</button>
                             </form>
                         </li>
                     }
@@ -93,7 +111,6 @@
             <p class="card-text">Il Meglio della Pizza</p>
             <p>  @DateTime.Now.Day  @DateTime.Now.Month  @DateTime.Now.Year </p>
             <p> </p>
-
         </div>
     </div>
 
