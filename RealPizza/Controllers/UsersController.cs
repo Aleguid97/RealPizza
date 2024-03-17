@@ -132,17 +132,25 @@ namespace RealPizza.Models
                     if (user != null)
                     {
                         FormsAuthentication.SetAuthCookie(username, false);
-                        TempData["LoginMessage"] = "Benvenuto " + user.Username;
+                        
+                        
                         HttpCookie LoginCookie = new HttpCookie("IDCookie");
                         LoginCookie.Value = user.ID_Utente.ToString();
                         LoginCookie.Expires = DateTime.Now.AddHours(1);
                         Response.Cookies.Add(LoginCookie);
 
-                        if (user.Ruolo == "Admin")
+                        if (user != null && user.Ruolo == "Admin")
                         {
                             TempData["AdminMessage"] = "Hai effettuato l'accesso come amministratore.";
                         }
 
+                        
+                        if  (user.Nome !=null)
+                        { 
+                        TempData["LoginMessage"] = "Benvenuto " + user.Nome;
+                        
+                        
+                        } 
                         return RedirectToAction("Index", "Home");
                     }
 

@@ -1,5 +1,6 @@
 namespace RealPizza.Models
 {
+    using RealPizza.Controllers.ControlloCampi;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -22,22 +23,28 @@ namespace RealPizza.Models
         [StringLength(50)]
 
         [Display(Name = "Nome Cliente")]
+        [Nominativo]
         public string Nome { get; set; }
 
         [Required]
         [StringLength(50)]
+        [Cognome]
         public string Cognome { get; set; }
 
         [Required]
         [StringLength(50)]
+        [Username]
         public string Username { get; set; }
 
         [Required]
+        [Email]
         public string Email { get; set; }
 
-        [Required]
+        
         [StringLength(50)]
         [DataType(DataType.Password)]
+        [Password]
+        [Required]
         public string Password { get; set; }
 
         [Required]

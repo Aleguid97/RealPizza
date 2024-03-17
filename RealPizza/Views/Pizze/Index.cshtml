@@ -5,25 +5,23 @@
 }
 
 
-
-@if (TempData["Message"] != null)
-{
-    <div id="alertMessage" class="alert alert-success" role="alert">
-        @TempData["Message"]
-    </div>
-
-    <script>
-        // Funzione per nascondere automaticamente l'alert dopo un certo periodo di tempo
-        window.setTimeout(function () {
-            $("#alertMessage").fadeTo(500, 0).slideUp(500, function () {
-                $(this).remove();
-            });
-        }, 1000); // L'alert scomparirà dopo 3 secondi (3000 millisecondi)
-    </script>
-}
 <link href="~/Content/Site.css" rel="stylesheet" />
 
-<div class="overlay h-100"></div>
+@if (TempData["OrderConfirm"] != null)
+{
+    <div class="alert alert-dismissible fade show" role="alert" style="background-color: peru">
+        @TempData["OrderConfirm"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["AddCart"] != null)
+{
+    <div class="alert alert-dismissible fade show" role="alert" style="background-color: peru">
+        @TempData["AddCart"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 
 <div class="row row-cols-1 row-cols-md-3 g-4 mb-5 mt-3">
     @foreach (var item in Model)
@@ -53,20 +51,33 @@
                     @if (User.IsInRole("Admin"))
                     {
 
-                        <button class="BtnMdf">
+                        <button class="BtnMdf mx-2">
                             @Html.ActionLink("Modifica", "Edit", new { id = item.ID_Pizza })
                         </button>
+
+
 
                         <button class="BtnDlt">
                             @Html.ActionLink("Elimina", "Delete", new { id = item.ID_Pizza })
                         </button>
                     }
+
                     @if (!User.Identity.IsAuthenticated)
                     {
-                       <button  class="button2">@Html.ActionLink("Accedi", "Authorize", "Users", new { area = "" }, new { @class = "nav-link" })</button>
+                        <button class="BtnMdf ">
+
+                            @Html.ActionLink("Accedi", "Authorize", "Users", new { area = "" }, new { @class = "" })
+
+                        </button>
                     }
                 </div>
             </div>
         </div>
     }
 </div>
+<script>
+    $(function () {
+
+        $(".alert").delay(2500).fadeOut(500);
+    });
+</script>

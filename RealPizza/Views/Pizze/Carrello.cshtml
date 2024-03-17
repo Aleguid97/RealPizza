@@ -4,23 +4,17 @@
     ViewBag.Title = "Carrello";
 }
 
-@if (TempData["Message"] != null)
+@*<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+@if (TempData["CartRemove"] != null)
 {
-    <div id="alertMessage" class="alert alert-danger" role="alert">
-        @TempData["Message"]
+    <div class="alert alert-dismissible fade show" role="alert" style="background-color: indianred">
+        @TempData["CartRemove"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-
-    <script>
-        // Funzione per nascondere automaticamente l'alert dopo un certo periodo di tempo
-        window.setTimeout(function () {
-            $("#alertMessage").fadeTo(500, 0).slideUp(500, function () {
-                $(this).remove();
-            });
-        }, 1000); // L'alert scomparirà dopo 3 secondi (3000 millisecondi)
-    </script>
 }
-
-
 
 <h2>Carrello</h2>
 
@@ -48,35 +42,66 @@
                 <tr>
                     <td><img src="@item.Immagine" alt="Immagine Pizza" style="width: 100px; height: 100px;" /></td>
                     <td>@item.Nome</td>
-                    <td>@item.Prezzo €</td>
+                    <td class="text-center">@item.Prezzo €</td>
                     <td>@item.Tempo_Consegna min</td>
                     <td>@item.Ingredienti</td>
-                    <td><input type="text" class="form-control" name="note" placeholder="Note" required></td>
+                    <td><input type="text" class="form-control" name="note" placeholder="Note"></td>
                     <td>
-
-                        @Html.ActionLink("Rimuovi", "RemoveFromCart", new { id = item.ID_Pizza }, new { @class = "BtnDlt" })
+                        <button class="BtnDlt"> @Html.ActionLink("Rimuovi", "RemoveFromCart", new { id = item.ID_Pizza })</button>
                     </td>
                 </tr>
-
                 { Tot += item.Prezzo; }
             }
 
             <tr>
                 <td colspan="1"></td>
                 <td colspan="1"></td>
-                <td width="20%" colspan="1"> <strong> @Tot € </strong> </td>
+                <td width="10%" colspan="1"> <strong> @Tot € </strong> </td>
                 <td colspan="1"></td>
                 <td colspan="1"></td>
                 <td colspan="1"> <input type="text" class="form-control" name="indirizzo" placeholder="Indirizzo" required> </td>
+
                 <td colspan="1">
-                    <button type="submit" class="BtnAcq">Ordina</button>
+                    <button type="button" class="BtnAcq" id="openPaymentModal" data-toggle="modal" data-target="#paymentModal">Paga</button>
                 </td>
             </tr>
         </tbody>
     </table>
 }
 
-
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Inserisci Metodo di Pagamento</h5>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+            </div>
+            <div class="modal-body">
+                <form id="paymentForm">
+                    <div class="form-group">
+                        <label for="cardNumber">Numero Carta di Credito</label>
+                        <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="Inserisci il numero della carta">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="expirationDate">Data di Scadenza</label>
+                        <input type="text" class="form-control" id="expirationDate" name="expirationDate" placeholder="MM/YY">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="cvv">CVV</label>
+                        <input type="text" class="form-control" id="cvv" name="cvv" placeholder="CVV">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="cardHolderName">Nome del Titolare</label>
+                        <input type="text" class="form-control" id="cardHolderName" name="cardHolderName" placeholder="Nome del Titolare">
+                    </div>
+                    <button type="submit" class="BtnAcq mt-3">Ordina</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 @if (!Model.Any())
 {
@@ -85,3 +110,17 @@
     </div>
 }
 
+<script>
+    $(document).ready(function () {
+        $("#paymentForm").submit(function (e) {
+            e.preventDefault();
+
+            var formData = $(this).serialize();
+            $.post("/Ordina/Ordina", formData, function (response) {
+
+            });
+
+            $('#paymentModal').modal('hide');
+        });
+    });
+</script>

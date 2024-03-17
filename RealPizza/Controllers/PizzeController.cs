@@ -9,7 +9,6 @@ using System.Web.Mvc;
 
 namespace RealPizza.Models
 {
-    
     public class PizzeController : Controller
     {
         private ModelDbContext db = new ModelDbContext();
@@ -20,7 +19,6 @@ namespace RealPizza.Models
             return View(db.Pizze.ToList());
         }
 
-        
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -41,9 +39,6 @@ namespace RealPizza.Models
             return View();
         }
 
-        // POST: Pizze/Create
-        // Per la protezione da attacchi di overposting, abilitare le proprietà a cui eseguire il binding. 
-        // Per altri dettagli, vedere https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID_Pizza,Nome,Prezzo,Tempo_Consegna,Ingredienti,Immagine")] Pizze pizze, HttpPostedFileBase file)
@@ -79,9 +74,6 @@ namespace RealPizza.Models
             return View(pizze);
         }
 
-
-
-        // GET: Pizze/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -96,9 +88,6 @@ namespace RealPizza.Models
             return View(pizze);
         }
 
-        // POST: Pizze/Edit/5
-        // Per la protezione da attacchi di overposting, abilitare le proprietà a cui eseguire il binding. 
-        // Per altri dettagli, vedere https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID_Pizza,Nome,Prezzo,Tempo_Consegna,Ingredienti,Immagine")] Pizze pizze)
@@ -112,7 +101,6 @@ namespace RealPizza.Models
             return View(pizze);
         }
 
-        // GET: Pizze/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -127,7 +115,6 @@ namespace RealPizza.Models
             return View(pizze);
         }
 
-        // POST: Pizze/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -135,6 +122,9 @@ namespace RealPizza.Models
             Pizze pizze = db.Pizze.Find(id);
             db.Pizze.Remove(pizze);
             db.SaveChanges();
+
+            TempData["Message"] = "Prodotto rimosso con successo."; // Messaggio Conferma Eliminazione Prodotto
+
             return RedirectToAction("Index");
         }
 
@@ -144,47 +134,46 @@ namespace RealPizza.Models
             return View(carrello);
         }
 
-       public ActionResult AddToCart(int id)
-{
-    using (var dbContext = new ModelDbContext())
-    {
-        var pizza = dbContext.Pizze.Find(id);
-        if (pizza != null)
+        public ActionResult AddToCart(int id)
         {
-            var carrello = Session["Carrello"] as List<Pizze> ?? new List<Pizze>();
-            carrello.Add(pizza);
-            Session["Carrello"] = carrello;
+            using (var dbContext = new ModelDbContext())
+            {
+                var pizza = dbContext.Pizze.Find(id);
+                if (pizza != null)
+                {
+                    var carrello = Session["Carrello"] as List<Pizze> ?? new List<Pizze>();
+                    carrello.Add(pizza);
+                    Session["Carrello"] = carrello;
 
-            var cookieValue = HttpContext.Request.Cookies["IDCookie"]?.Value;
-            if (!string.IsNullOrEmpty(cookieValue))
-            {
-                // Creazione di un nuovo oggetto Users con il valore del cookie e aggiunta alla lista Utenti
-                var utente = new Users { ID_Utente = Convert.ToInt32(cookieValue)};
-                var utenti = Session["Utenti"] as List<Users> ?? new List<Users>();
-                utenti.Add(utente);
-                Session["Utenti"] = utenti;
-            }
-            else
-            {
-                // Gesto il caso in cui il cookie non ha un valore
-                TempData["Message"] = "Errore: Cookie non presente.";
+                    var cookieValue = HttpContext.Request.Cookies["IDCookie"]?.Value;
+                    if (!string.IsNullOrEmpty(cookieValue))
+                    {
+                        // Creazione di un nuovo oggetto Users con il valore del cookie e aggiunta alla lista Utenti
+                        var utente = new Users { ID_Utente = Convert.ToInt32(cookieValue) };
+                        var utenti = Session["Utenti"] as List<Users> ?? new List<Users>();
+                        utenti.Add(utente);
+                        Session["Utenti"] = utenti;
+                    }
+                    else
+                    {
+                        // Gestione del caso in cui il cookie non ha un valore
+                        TempData["Message"] = "Errore: Cookie non presente.";
+                        return RedirectToAction("Index", "Pizze");
+                    }
+
+                    // Aggiorna il badge del carrello
+                    AggiornaBadgeCarrello();
+
+                    TempData["AddCart"] = "Prodotto aggiunto al carrello con successo.";
+                }
+                else
+                {
+                    TempData["Message"] = "Errore: Prodotto non trovato.";
+                }
+
                 return RedirectToAction("Index", "Pizze");
             }
-
-            // Aggiorna il badge del carrello
-            AggiornaBadgeCarrello();
-            
-            TempData["Message"] = "Prodotto aggiunto al carrello con successo.";
         }
-        else
-        {
-            TempData["Message"] = "Errore: Prodotto non trovato.";
-        }
-
-        return RedirectToAction("Index", "Pizze");
-    }
-}
-
 
         public ActionResult RemoveFromCart(int id)
         {
@@ -201,10 +190,10 @@ namespace RealPizza.Models
                         carrello.Remove(pizzaToRemove);
                         Session["Carrello"] = carrello;
 
-                        TempData["Message"] = "Prodotto rimosso dal carrello con successo.";
-
+                        TempData["CartRemove"] = "Prodotto rimosso dal carrello con successo.";
                         // Aggiorna il badge del carrello
                         AggiornaBadgeCarrello();
+                        
                     }
                     else
                     {
@@ -220,18 +209,23 @@ namespace RealPizza.Models
             }
         }
 
-        private void AggiornaBadgeCarrello()
+        public void AggiornaBadgeCarrello()
         {
             // Ottieni il numero di pizze presenti nella sessione del carrello
             var carrello = Session["Carrello"] as List<Pizze>;
             var numeroArticoli = carrello?.Count ?? 0;
-             
-            
-            
-
 
             // Aggiorna il badge del carrello nella sessione
             Session["BadgeCarrello"] = numeroArticoli;
+        }
+
+        public void SvuotaCarrello()
+        {
+            // Rimuovi tutti gli elementi dal carrello
+            Session.Remove("Carrello");
+
+            // Aggiorna il badge del carrello
+            AggiornaBadgeCarrello();
         }
     }
 }

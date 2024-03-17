@@ -14,10 +14,12 @@
     padding-right: 15px;
 }
 
-a, a:hover {
+* a, a:hover {
     color: #000000;
     text-decoration: none;
 }
+
+
 
 /*input,
 select,
@@ -80,6 +82,7 @@ button {
     justify-content: center;
     align-items: center;
     transition: background-color 0.3s;
+    text-decoration:none;
 }
 
     .BtnDlt:hover {
@@ -137,3 +140,5 @@ button {
     /* Registrazione */
 
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+}

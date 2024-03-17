@@ -17,7 +17,7 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-5">
             @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
         </div>
@@ -25,7 +25,7 @@
 
     <div class="form-group mt-2">
         @Html.LabelFor(model => model.Prezzo, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-5">
             @Html.EditorFor(model => model.Prezzo, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Prezzo, "", new { @class = "text-danger" })
         </div>
@@ -33,7 +33,7 @@
 
     <div class="form-group mt-2">
         @Html.LabelFor(model => model.Tempo_Consegna, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-5">
             @Html.EditorFor(model => model.Tempo_Consegna, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Tempo_Consegna, "", new { @class = "text-danger" })
         </div>
@@ -41,7 +41,7 @@
 
     <div class="form-group mt-2">
         @Html.LabelFor(model => model.Ingredienti, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-5">
             @Html.EditorFor(model => model.Ingredienti, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Ingredienti, "", new { @class = "text-danger" })
         </div>
@@ -49,7 +49,7 @@
 
     <div class="form-group mt-3">
         @Html.Label("Aggiungi Immagine", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-5">
             @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
             <small class="text-muted">Formati supportati: JPG, PNG, GIF. Dimensione massima: 5MB.</small>
         </div>
@@ -57,8 +57,8 @@
 
     <div class="form-group mt-3 mb-4">
         @*<div class="col-md-offset-2 col-md-10">*@
-            <button type="submit" style="display: inline-block;" class="button2">Aggiungi</button>
-            <button class="button2" style="display: inline-block;">@Html.ActionLink("Annulla", "Index")</button>
+            <button type="submit" style="display: inline-block;" class="BtnMdf">Aggiungi</button>
+            <button class="BtnDlt" style="display: inline-block;">@Html.ActionLink("Annulla", "Index")</button>
         @*</div>*@
     </div>
 

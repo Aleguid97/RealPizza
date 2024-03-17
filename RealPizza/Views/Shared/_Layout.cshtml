@@ -7,13 +7,11 @@
     <title>@ViewBag.Title - Applicazione ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
 </head>
-
 <body>
 
     <style>
-
         .footer {
             position: fixed;
             left: 0;
@@ -47,11 +45,10 @@
             </div>
             <div class="collapse navbar-collapse justify-content-end">
                 <ul class="navbar-nav">
-
                     @if (!User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item">@Html.ActionLink("Accedi", "Authorize", "Users", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li class="nav-item">@Html.ActionLink("Registrati", "Create", "Users", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li> <button class="nav-item BtnMdf me-2"> @Html.ActionLink("Accedi", "Authorize", "Users", new { area = "" }, new { @class = "nav-link" }) </button></li>
+                        <li> <button class="nav-item BtnMdf">@Html.ActionLink("Registrati", "Create", "Users", new { area = "" }, new { @class = "nav-link" }) </button></li>
                     }
                     else
                     {
@@ -59,9 +56,8 @@
                             @if (User.Identity.IsAuthenticated)
                             {
                                 if (Session["BadgeCarrello"] != null && (int)Session["BadgeCarrello"] > 0)
-
                                 {
-                                    <button type="button" class="nav-link BtnMdf me-2 position-relative">
+                                    <button type="button" class="BtnMdf me-2 position-relative">
                                         @Html.ActionLink("Carrello", "Carrello", "Pizze", new { area = "" }, new { @class = "nav-link" })
                                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger">
                                             @Session["BadgeCarrello"]
@@ -74,34 +70,37 @@
                                 }
                             }
                         </li>
-
                         <li class="nav-item">
                             <form action="@Url.Action("Logout", "Users")" method="post">
-                                <button type="submit" class="btn btn-link BtnDlt nav-link">Logout</button>
+                                <button type="submit" class="BtnDlt">Logout</button>
                             </form>
                         </li>
                     }
-
                 </ul>
             </div>
         </div>
     </nav>
-    @if (TempData["LogoutMessage"] != null)
-    {
-        <div id="alertMessage" class="alert alert-danger mb-5" role="alert">
-            @TempData["LogoutMessage"]
-        </div>
 
-        <script>
-            // Funzione per nascondere automaticamente l'alert dopo un certo periodo di tempo
-            window.setTimeout(function () {
-                $("#alertMessage").fadeTo(500, 0).slideUp(500, function () {
-                    $(this).remove();
-                });
-            }, 2000); // L'alert scomparirà dopo 3 secondi (3000 millisecondi)
-        </script>
-    }
+
     <div class="container">
+        @if (TempData["LoginMessage"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["LoginMessage"]
+            </div>
+        }
+
+    </div>
+
+    <div class="container">
+        @if (TempData["LogoutMessage"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @TempData["LogoutMessage"]
+            </div>
+
+        }
+
         @RenderBody()
     </div>
 
@@ -109,7 +108,7 @@
         <div class="card-body">
             <h5 class="card-title"> RealPizza </h5>
             <p class="card-text">Il Meglio della Pizza</p>
-            <p>  @DateTime.Now.Day  @DateTime.Now.Month  @DateTime.Now.Year </p>
+            <p> @DateTime.Now.Day @DateTime.Now.Month @DateTime.Now.Year </p>
             <p> </p>
         </div>
     </div>
@@ -117,5 +116,12 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script>
+        $(function () {
+
+            $(".alert").delay(2500).fadeOut(500);
+        });
+    </script>
 </body>
 </html>

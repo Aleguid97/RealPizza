@@ -4,21 +4,6 @@
     ViewBag.Title = "Authorize";
 }
 
-@if (TempData["LoginMessage"] != null)
-{
-    <div id="alertMessage" class="alert alert-success" role="alert">
-        @TempData["LoginMessage"]
-    </div>
-
-    <script>
-        // Funzione per nascondere automaticamente l'alert dopo un certo periodo di tempo
-        window.setTimeout(function () {
-            $("#alertMessage").fadeTo(500, 0).slideUp(500, function () {
-                $(this).remove();
-            });
-        }, 1000); // L'alert scomparirà dopo 3 secondi (3000 millisecondi)
-    </script>
-}
 
 
 @using (Html.BeginForm())
@@ -51,7 +36,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" class="mt-4">Accedi</button>
+                                <button type="submit" class="mt-4 BtnMdf w.">Accedi</button>
                             </div>
                         </div>
 

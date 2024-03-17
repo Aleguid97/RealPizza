@@ -23,6 +23,7 @@ namespace RealPizza.Models
 
         public int Quantita { get; set; }
 
+        
         public string Note { get; set; }
 
         public decimal Totale { get; set; }
